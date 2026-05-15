@@ -48,9 +48,6 @@ class MasjidApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: appTheme(),
 
-      // ── RESPONSIVENESS: clamp text scale ──────────────
-      // Even if user sets huge font size on device,
-      // the app will not overflow — max 1.2x scaling.
       builder: (context, child) {
         final mq = MediaQuery.of(context);
         return MediaQuery(
