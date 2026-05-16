@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masjidapp/firebase_options.dart';
+import 'package:masjidapp/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/app_theme.dart';
@@ -9,7 +10,6 @@ import 'providers/app_provider.dart';
 import 'providers/donation_provider.dart';
 import 'providers/expense_provider.dart';
 import 'providers/project_provider.dart';
-import 'screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +61,7 @@ class MasjidApp extends StatelessWidget {
         );
       },
 
-      home: const MainScreen(),
+      home: const SplashScreen(),
     );
   }
 }

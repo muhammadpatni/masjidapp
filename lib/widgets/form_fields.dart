@@ -1,5 +1,187 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import '../constants/app_theme.dart';
+
+// // ─── Text field ───────────────────────────────
+// class AppTextField extends StatelessWidget {
+//   final String label;
+//   final String? hint;
+//   final TextEditingController controller;
+//   final TextInputType keyboardType;
+//   final List<TextInputFormatter>? inputFormatters;
+//   final int maxLines;
+//   final String? Function(String?)? validator;
+//   final bool required;
+
+//   const AppTextField({
+//     super.key,
+//     required this.label,
+//     required this.controller,
+//     this.hint,
+//     this.keyboardType = TextInputType.text,
+//     this.inputFormatters,
+//     this.maxLines = 1,
+//     this.validator,
+//     this.required = false,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) => TextFormField(
+//     controller: controller,
+//     keyboardType: keyboardType,
+//     inputFormatters: inputFormatters,
+//     maxLines: maxLines,
+//     validator:
+//         validator ??
+//         (required
+//             ? (v) =>
+//                   (v == null || v.trim().isEmpty) ? '$label is required' : null
+//             : null),
+//     decoration: InputDecoration(
+//       labelText: label + (required ? ' *' : ''),
+//       hintText: hint,
+//     ),
+//   );
+// }
+
+// // ─── Amount field ─────────────────────────────
+// class AmountField extends StatelessWidget {
+//   final TextEditingController controller;
+//   final String label;
+
+//   const AmountField({
+//     super.key,
+//     required this.controller,
+//     this.label = 'Amount (PKR)',
+//   });
+
+//   @override
+//   Widget build(BuildContext context) => TextFormField(
+//     controller: controller,
+//     keyboardType: const TextInputType.numberWithOptions(decimal: true),
+//     inputFormatters: [
+//       FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+//     ],
+//     validator: (v) {
+//       if (v == null || v.isEmpty) return '$label is required';
+//       if (double.tryParse(v) == null) return 'Enter a valid number';
+//       if (double.parse(v) <= 0) return 'Amount must be greater than 0';
+//       return null;
+//     },
+//     decoration: InputDecoration(
+//       labelText: '$label *',
+//       prefixText: 'PKR ',
+//       prefixStyle: const TextStyle(
+//         fontWeight: FontWeight.w600,
+//         color: kPrimary,
+//       ),
+//     ),
+//   );
+// }
+
+// // ─── Dropdown field ───────────────────────────
+// class AppDropdown<T> extends StatelessWidget {
+//   final String label;
+//   final T value;
+//   final List<T> items;
+//   final String Function(T) displayText;
+//   final void Function(T?) onChanged;
+
+//   const AppDropdown({
+//     super.key,
+//     required this.label,
+//     required this.value,
+//     required this.items,
+//     required this.displayText,
+//     required this.onChanged,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) => DropdownButtonFormField<T>(
+//     value: value,
+//     onChanged: onChanged,
+//     isExpanded: true,
+//     decoration: InputDecoration(labelText: label),
+//     items: items
+//         .map(
+//           (item) => DropdownMenuItem<T>(
+//             value: item,
+//             child: Text(displayText(item), overflow: TextOverflow.ellipsis),
+//           ),
+//         )
+//         .toList(),
+//   );
+// }
+
+// // ─── Date picker field ────────────────────────
+// class DatePickerField extends StatelessWidget {
+//   final String label;
+//   final DateTime date;
+//   final void Function(DateTime) onDateSelected;
+//   final bool required;
+
+//   const DatePickerField({
+//     super.key,
+//     required this.label,
+//     required this.date,
+//     required this.onDateSelected,
+//     this.required = false,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) => InkWell(
+//     onTap: () async {
+//       final picked = await showDatePicker(
+//         context: context,
+//         initialDate: date,
+//         firstDate: DateTime(2020),
+//         lastDate: DateTime(2030),
+//         builder: (ctx, child) => Theme(
+//           data: Theme.of(
+//             ctx,
+//           ).copyWith(colorScheme: const ColorScheme.light(primary: kPrimary)),
+//           child: child!,
+//         ),
+//       );
+//       if (picked != null) onDateSelected(picked);
+//     },
+//     child: InputDecorator(
+//       decoration: InputDecoration(
+//         labelText: label + (required ? ' *' : ''),
+//         suffixIcon: const Icon(Icons.calendar_today, size: 18, color: kPrimary),
+//       ),
+//       child: Text(
+//         '${date.day.toString().padLeft(2, '0')}/'
+//         '${date.month.toString().padLeft(2, '0')}/${date.year}',
+//         style: const TextStyle(fontSize: 14),
+//       ),
+//     ),
+//   );
+// }
+
+// // ─── Form Section Label ───────────────────────
+// class FormSectionLabel extends StatelessWidget {
+//   final String text;
+//   const FormSectionLabel(this.text, {super.key});
+
+//   @override
+//   Widget build(BuildContext context) => Padding(
+//     padding: const EdgeInsets.only(top: 8, bottom: 4),
+//     child: Text(
+//       text,
+//       style: const TextStyle(
+//         fontSize: 12,
+//         fontWeight: FontWeight.w700,
+//         color: kPrimary,
+//         letterSpacing: 0.4,
+//       ),
+//     ),
+//   );
+// }
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_theme.dart';
 
 // ─── Text field ───────────────────────────────
@@ -27,17 +209,25 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-    controller:      controller,
-    keyboardType:    keyboardType,
+    controller: controller,
+    keyboardType: keyboardType,
     inputFormatters: inputFormatters,
-    maxLines:        maxLines,
-    validator:       validator ??
+    maxLines: maxLines,
+    style: GoogleFonts.cairo(
+      fontSize: 14,
+      color: Colors.white,
+    ), // Premium text input
+    validator:
+        validator ??
         (required
-            ? (v) => (v == null || v.trim().isEmpty) ? '$label is required' : null
+            ? (v) =>
+                  (v == null || v.trim().isEmpty) ? '$label is required' : null
             : null),
     decoration: InputDecoration(
       labelText: label + (required ? ' *' : ''),
-      hintText:  hint,
+      labelStyle: GoogleFonts.cairo(color: Colors.white70),
+      hintText: hint,
+      hintStyle: GoogleFonts.cairo(color: Colors.white38),
     ),
   );
 }
@@ -55,8 +245,13 @@ class AmountField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-    controller:   controller,
+    controller: controller,
     keyboardType: const TextInputType.numberWithOptions(decimal: true),
+    style: GoogleFonts.cairo(
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
+      color: kGold, // Giving currency entry a distinct gold touch
+    ),
     inputFormatters: [
       FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
     ],
@@ -68,8 +263,12 @@ class AmountField extends StatelessWidget {
     },
     decoration: InputDecoration(
       labelText: '$label *',
+      labelStyle: GoogleFonts.cairo(color: Colors.white70),
       prefixText: 'PKR ',
-      prefixStyle: const TextStyle(fontWeight: FontWeight.w600, color: kPrimary),
+      prefixStyle: GoogleFonts.cairo(
+        fontWeight: FontWeight.bold,
+        color: kGold, // Metallic gold currency tag
+      ),
     ),
   );
 }
@@ -96,15 +295,27 @@ class AppDropdown<T> extends StatelessWidget {
     value: value,
     onChanged: onChanged,
     isExpanded: true,
-    decoration: InputDecoration(labelText: label),
+    dropdownColor: kPrimaryDark, // Dark background inside dropdown menu list
+    icon: const Icon(
+      Icons.keyboard_arrow_down,
+      color: kGold,
+    ), // Sleeker gold icon
+    style: GoogleFonts.cairo(fontSize: 14, color: Colors.white),
+    decoration: InputDecoration(
+      labelText: label,
+      labelStyle: GoogleFonts.cairo(color: Colors.white70),
+    ),
     items: items
-        .map((item) => DropdownMenuItem<T>(
-              value: item,
-              child: Text(
-                displayText(item),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ))
+        .map(
+          (item) => DropdownMenuItem<T>(
+            value: item,
+            child: Text(
+              displayText(item),
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.cairo(),
+            ),
+          ),
+        )
         .toList(),
   );
 }
@@ -134,7 +345,19 @@ class DatePickerField extends StatelessWidget {
         lastDate: DateTime(2030),
         builder: (ctx, child) => Theme(
           data: Theme.of(ctx).copyWith(
-            colorScheme: const ColorScheme.light(primary: kPrimary),
+            // Transforming the Date Picker dialog to match Islamic Gold Theme
+            colorScheme: const ColorScheme.dark(
+              primary: kGold, // Header circle & selected day glow
+              onPrimary: kPrimaryDark, // Text color inside selected day circle
+              surface: kPrimaryDark, // Background of dialog box
+              onSurface: Colors.white, // Normal text days
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: kGold, // Action buttons label color
+                textStyle: GoogleFonts.cairo(fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           child: child!,
         ),
@@ -144,12 +367,16 @@ class DatePickerField extends StatelessWidget {
     child: InputDecorator(
       decoration: InputDecoration(
         labelText: label + (required ? ' *' : ''),
-        suffixIcon: const Icon(Icons.calendar_today, size: 18, color: kPrimary),
+        labelStyle: GoogleFonts.cairo(color: Colors.white70),
+        suffixIcon: const Icon(
+          Icons.calendar_today_rounded,
+          size: 18,
+          color: kGold,
+        ), // Golden elegant calendar icon
       ),
       child: Text(
-        '${date.day.toString().padLeft(2,'0')}/'
-        '${date.month.toString().padLeft(2,'0')}/${date.year}',
-        style: const TextStyle(fontSize: 14),
+        '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}',
+        style: GoogleFonts.cairo(fontSize: 14, color: Colors.white),
       ),
     ),
   );
@@ -162,14 +389,14 @@ class FormSectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8, bottom: 4),
+    padding: const EdgeInsets.only(top: 12, bottom: 6),
     child: Text(
       text,
-      style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w700,
-        color: kPrimary,
-        letterSpacing: 0.4,
+      style: GoogleFonts.cairo(
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
+        color: kGold, // Form section titles look stunning in gold accents
+        letterSpacing: 0.5,
       ),
     ),
   );
