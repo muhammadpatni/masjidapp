@@ -292,7 +292,7 @@ class AppDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<T>(
-    value: value,
+    initialValue: value,
     onChanged: onChanged,
     isExpanded: true,
     dropdownColor: kPrimaryDark, // Dark background inside dropdown menu list
