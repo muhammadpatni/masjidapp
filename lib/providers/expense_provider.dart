@@ -123,6 +123,9 @@ class ExpenseProvider extends ChangeNotifier {
 
   // ── Init ──────────────────────────────────
   void init() {
+    _sub?.cancel();
+    _loading = true;
+    notifyListeners();
     _sub = _col
         .orderBy('date', descending: true)
         .snapshots()

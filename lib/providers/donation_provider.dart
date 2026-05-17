@@ -111,6 +111,9 @@ class DonationProvider extends ChangeNotifier {
 
   // ── Init — listen to Firestore stream ─────
   void init() {
+    _sub?.cancel(); // cancel any existing subscription before re-init
+    _loading = true;
+    notifyListeners();
     _sub = _col
         .orderBy('date', descending: true)
         .snapshots()

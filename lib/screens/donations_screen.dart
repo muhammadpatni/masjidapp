@@ -1603,18 +1603,9 @@ class DonationsScreen extends StatelessWidget {
       //   ),
       // ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'donations_fab',
         onPressed: () => _openForm(context, provider),
-        backgroundColor: kGold,
-        foregroundColor: kPrimaryDark,
-        elevation: 4,
-        icon: const Icon(Icons.add, weight: 700),
-        label: Text(
-          'Add Donation',
-          style: GoogleFonts.cairo(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
-          ),
-        ),
+        label: const Text('Add Donation'),
       ),
       body: Container(
         decoration: BoxDecoration(

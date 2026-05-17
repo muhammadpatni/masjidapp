@@ -189,7 +189,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masjidapp/auth/auth_service.dart';
 import 'package:masjidapp/auth/login_screen.dart';
+import 'package:provider/provider.dart';
 import '../constants/app_theme.dart';
+import '../providers/donation_provider.dart';
+import '../providers/expense_provider.dart';
+import '../providers/project_provider.dart';
 import 'dashboard_screen.dart';
 import 'donations_screen.dart';
 import 'expenses_screen.dart';
@@ -213,6 +217,19 @@ class _MainScreenState extends State<MainScreen> {
     ExpensesScreen(),
     ProjectsScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Init providers here — user is guaranteed logged-in at this point
+    // (MainScreen is only shown after auth check in splash_screen.dart)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<DonationProvider>().init();
+      context.read<ExpenseProvider>().init();
+      context.read<ProjectProvider>().init();
+    });
+  }
 
   // ── Logout confirm dialog ─────────────────────────────
   Future<void> _showLogoutDialog() async {

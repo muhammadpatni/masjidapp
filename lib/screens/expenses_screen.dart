@@ -1867,82 +1867,56 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             )
           : null,
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'expenses_fab',
         onPressed: () => _openForm(context, provider),
-        backgroundColor: kGold,
-        foregroundColor: kPrimaryDark,
-        elevation: 4,
-        icon: const Icon(Icons.add, weight: 700),
-        label: Text(
-          'Add Expense',
-          style: GoogleFonts.cairo(
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
-          ),
-        ),
+        icon: const Icon(Icons.add),
+        label: const Text('Add Expense'),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: const Alignment(-0.5, -0.6),
-            radius: 1.3,
-            colors: [kPrimary.withOpacity(0.12), kPrimaryDark],
-          ),
-        ),
-        child: Column(
-          children: [
-            _MonthBar(
-              label: app.selectedMonthLabel,
-              total: total,
-              onPrev: app.prevMonth,
-              onNext: app.nextMonth,
-              isExpense: true,
-            ),
-            Expanded(
-              child: provider.loading
-                  ? const LoadingWidget(message: 'Loading expenses…')
-                  : ListView(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-                      children: [
-                        // Category summary chips
-                        if (catTotals.isNotEmpty) ...[
-                          _CategorySummary(
-                            totals: catTotals,
-                            selected: _filterCat,
-                            onSelect: (c) => setState(
-                              () => _filterCat = _filterCat == c ? '' : c,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
+      body: provider.loading
+          ? const LoadingWidget(message: 'Loading expenses…')
+          : ListView(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+              children: [
+                _MonthBar(
+                  label: app.selectedMonthLabel,
+                  total: total,
+                  onPrev: app.prevMonth,
+                  onNext: app.nextMonth,
+                  isExpense: true,
+                ),
+                const SizedBox(height: 16),
+                if (catTotals.isNotEmpty) ...[
+                  _CategorySummary(
+                    totals: catTotals,
+                    selected: _filterCat,
+                    onSelect: (c) =>
+                        setState(() => _filterCat = _filterCat == c ? '' : c),
+                  ),
+                  const SizedBox(height: 16),
+                ],
 
-                        if (list.isEmpty)
-                          EmptyState(
-                            emoji: '🧾',
-                            title: 'No expenses found',
-                            subtitle:
-                                'Tap + to record a salary, bill or expense',
-                            onAction: () => _openForm(context, provider),
-                            actionLabel: 'Add Expense',
-                          )
-                        else
-                          ...list.map(
-                            (e) => Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: _ExpenseCard(
-                                expense: e,
-                                onEdit: () =>
-                                    _openForm(context, provider, existing: e),
-                                onDelete: () =>
-                                    _confirmDelete(context, provider, e.id!),
-                              ),
-                            ),
-                          ),
-                      ],
+                if (list.isEmpty)
+                  EmptyState(
+                    emoji: '🧾',
+                    title: 'No expenses found',
+                    subtitle: 'Tap + to record a salary, bill or expense',
+                    onAction: () => _openForm(context, provider),
+                    actionLabel: 'Add Expense',
+                  )
+                else
+                  ...list.map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: _ExpenseCard(
+                        expense: e,
+                        onEdit: () => _openForm(context, provider, existing: e),
+                        onDelete: () =>
+                            _confirmDelete(context, provider, e.id!),
+                      ),
                     ),
+                  ),
+              ],
             ),
-          ],
-        ),
-      ),
     );
   }
 

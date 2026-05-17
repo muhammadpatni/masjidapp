@@ -104,6 +104,9 @@ class ProjectProvider extends ChangeNotifier {
 
   // ── Init ──────────────────────────────────
   void init() {
+    _sub?.cancel();
+    _loading = true;
+    notifyListeners();
     _sub = _col
         .orderBy('createdAt', descending: true)
         .snapshots()

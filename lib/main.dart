@@ -93,9 +93,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
-        ChangeNotifierProvider(create: (_) => DonationProvider()..init()),
-        ChangeNotifierProvider(create: (_) => ExpenseProvider()..init()),
-        ChangeNotifierProvider(create: (_) => ProjectProvider()..init()),
+        ChangeNotifierProvider(create: (_) => DonationProvider()),
+        ChangeNotifierProvider(create: (_) => ExpenseProvider()),
+        ChangeNotifierProvider(create: (_) => ProjectProvider()),
       ],
       child: const MasjidApp(),
     ),
