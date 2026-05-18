@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen>
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Nahi',
+              'cancel',
               style: GoogleFonts.cairo(color: Colors.white54),
             ),
           ),
@@ -126,10 +126,7 @@ class _LoginScreenState extends State<LoginScreen>
                 );
               }
             },
-            child: Text(
-              'Dobara Bhejen',
-              style: GoogleFonts.cairo(color: kGold),
-            ),
+            child: Text('resend', style: GoogleFonts.cairo(color: kGold)),
           ),
         ],
       ),

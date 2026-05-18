@@ -44,11 +44,17 @@ class AuthService {
       // Send email verification
       await user.sendEmailVerification();
 
-      return AuthResult(success: true, message: 'Registration successful! Please verify your email.');
+      return AuthResult(
+        success: true,
+        message: 'Registration successful! Please verify your email.',
+      );
     } on FirebaseAuthException catch (e) {
       return AuthResult(success: false, message: _authErrorMessage(e.code));
     } catch (e) {
-      return AuthResult(success: false, message: 'Something went wrong. Please try again.');
+      return AuthResult(
+        success: false,
+        message: 'Something went wrong. Please try again.',
+      );
     }
   }
 
@@ -79,12 +85,18 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       return AuthResult(success: false, message: _authErrorMessage(e.code));
     } catch (e) {
-      return AuthResult(success: false, message: 'Something went wrong. Please try again.');
+      return AuthResult(
+        success: false,
+        message: 'Something went wrong. Please try again.',
+      );
     }
   }
 
   // ── Resend verification email ─────────────────────────
-  Future<AuthResult> resendVerificationEmail(String email, String password) async {
+  Future<AuthResult> resendVerificationEmail(
+    String email,
+    String password,
+  ) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
         email: email.trim(),
@@ -94,7 +106,10 @@ class AuthService {
       await _auth.signOut();
       return AuthResult(success: true, message: 'Verification email sent!');
     } catch (e) {
-      return AuthResult(success: false, message: 'Could not send verification email.');
+      return AuthResult(
+        success: false,
+        message: 'Could not send verification email.',
+      );
     }
   }
 
@@ -117,25 +132,25 @@ class AuthService {
   String _authErrorMessage(String code) {
     switch (code) {
       case 'email-already-in-use':
-        return 'Yeh email pehle se registered hai.';
+        return 'this email is already registered. Please login or use a different email.';
       case 'invalid-email':
-        return 'Email format galat hai.';
+        return 'Invalid email format.';
       case 'weak-password':
-        return 'Password kam az kam 6 characters ka hona chahiye.';
+        return 'Password must be at least 6 characters long.';
       case 'user-not-found':
-        return 'Yeh email registered nahi hai.';
+        return 'This email is not registered. Please sign up or use a different email.';
       case 'wrong-password':
-        return 'Password galat hai.';
+        return 'Incorrect password.';
       case 'invalid-credential':
-        return 'Email ya password galat hai.';
+        return 'Invalid email or password.';
       case 'user-disabled':
-        return 'Yeh account disable kar diya gaya hai.';
+        return 'This account has been disabled.';
       case 'too-many-requests':
-        return 'Bahut zyada attempts. Thodi der baad try karein.';
+        return 'Too many attempts. Please try again later.';
       case 'network-request-failed':
-        return 'Internet connection check karein.';
+        return 'Network error. Please check your connection and try again.';
       default:
-        return 'Error: $code. Dobara try karein.';
+        return 'Error: $code. Please try again.';
     }
   }
 }
