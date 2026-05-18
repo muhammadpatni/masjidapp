@@ -258,7 +258,7 @@ class AmountField extends StatelessWidget {
     validator: (v) {
       if (v == null || v.isEmpty) return '$label is required';
       if (double.tryParse(v) == null) return 'Enter a valid number';
-      if (double.parse(v) <= 0) return 'Amount must be greater than 0';
+      // if (double.parse(v) <= 0) return 'Amount must be greater than 0';
       return null;
     },
     decoration: InputDecoration(

@@ -243,14 +243,14 @@ class _MainScreenState extends State<MainScreen> {
           style: GoogleFonts.cairo(color: kGold, fontWeight: FontWeight.bold),
         ),
         content: Text(
-          'Kya aap logout karna chahte hain?',
+          'Are you want to logout?',
           style: GoogleFonts.cairo(color: Colors.white70),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: Text(
-              'Nahi',
+              'Cancel',
               style: GoogleFonts.cairo(color: Colors.white54),
             ),
           ),
